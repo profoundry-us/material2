@@ -1,0 +1,57 @@
+<div class="chips-demo">
+  <section>
+    <h3>Static Chips</h3>
+
+    <md-chip-list>
+      <md-chip class="md-accent" (select)="alert('Test 1')">Test 1</md-chip>
+      <md-chip class="md-warn">Test 2</md-chip>
+      <md-basic-chip (select)="alert('Test 3')">Test 3</md-basic-chip>
+    </md-chip-list>
+
+    <h3>Material Contributors</h3>
+
+    <md-chip-list>
+      <md-chip *ngFor="let person of people" (remove)="remove(person)"
+               (select)="favorite(person)" (deselect)="unfavorite(person)"
+               [color]="color">
+        {{person.name}}
+      </md-chip>
+    </md-chip-list>
+
+    <input #input (keyup.enter)="add(input)" (blur)="add(input)" placeholder="New Contributor..." />
+
+    <h3>Favorite Contributors</h3>
+
+    <div>
+      <span *ngFor="let person of favorites">
+        {{person.name}}
+      </span>
+      <span *ngIf="favorites.length == 0"><em>No favorites...</em></span>
+    </div>
+
+
+    <h3>Stacked Chips</h3>
+
+    <p>
+      You can also stack the chips if you want them on top of each other.
+    </p>
+
+    <md-chip-list class="md-chip-list-stacked">
+      <md-chip [color]="color" (didfocus)="color = undefined" [selected]="color == undefined">
+        None
+      </md-chip>
+
+      <md-chip [color]="color" (didfocus)="color = 'primary'" [selected]="color == 'primary'">
+        Primary
+      </md-chip>
+
+      <md-chip [color]="color" (didfocus)="color = 'accent'" [selected]="color == 'accent'">
+        Accent
+      </md-chip>
+
+      <md-chip [color]="color" (didfocus)="color = 'warn'" [selected]="color == 'warn'">
+        Warn
+      </md-chip>
+    </md-chip-list>
+  </section>
+</div>

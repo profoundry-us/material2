@@ -32,10 +32,18 @@ export class ListKeyManager {
     return this;
   }
 
-  /** Sets the focus of the list to the item at the index specified. */
-  setFocus(index: number): void {
+  /**
+   * Sets the focus of the list to the item at the index specified.
+   *
+   * @param index The index of the item to be focused.
+   * @param focusElement Whether or not to focus the element as well. Defaults to `true`.
+   */
+  setFocus(index: number, focusElement: boolean = true): void {
     this._focusedItemIndex = index;
-    this._items.toArray()[index].focus();
+
+    if (focusElement) {
+      this._items.toArray()[index].focus();
+    }
   }
 
   /** Sets the focus properly depending on the key event passed in. */
@@ -43,15 +51,19 @@ export class ListKeyManager {
     switch (event.keyCode) {
       case DOWN_ARROW:
         this.focusNextItem();
+        event.preventDefault();
         break;
       case UP_ARROW:
         this.focusPreviousItem();
+        event.preventDefault();
         break;
       case HOME:
         this.focusFirstItem();
+        event.preventDefault();
         break;
       case END:
         this.focusLastItem();
+        event.preventDefault();
         break;
       case TAB:
         this._tabOut.next(null);
