@@ -4,9 +4,10 @@ import {
   Component,
   ContentChildren,
   ElementRef,
+  Input,
   QueryList,
   Renderer,
-  ViewEncapsulation
+  ViewEncapsulation,
 } from '@angular/core';
 
 import {MdChip} from './chip';
@@ -62,6 +63,10 @@ export class MdChipList implements AfterContentInit {
 
   /** The FocusKeyManager which handles focus. */
   _keyManager: FocusKeyManager;
+
+  /** Whether or not keyboard navigation should be enabled. Default is `true`. */
+  @Input()
+  enableKeyboard: boolean = true;
 
   /** The chip components contained within this chip list. */
   chips: QueryList<MdChip>;
@@ -130,6 +135,11 @@ export class MdChipList implements AfterContentInit {
    * Pass events to the keyboard manager. Available here for tests.
    */
   _keydown(event: KeyboardEvent) {
+    // Check to see if the user has disabled keyboard navigation
+    if (!this.enableKeyboard) {
+      return;
+    }
+
     let code = event.keyCode;
     let target = event.target as HTMLElement;
     let isInputEmpty = MdChipList._isInputEmpty(target);

@@ -45,11 +45,11 @@
       </p>
 
       <md-input-container [floatPlaceholder]="people.length > 0 ? 'always' : 'auto'">
-        <md-chip-list>
+        <md-chip-list aria-label="Contributors to Angular Material">
           <md-chip *ngFor="let person of people" [color]="color" [selectable]="selectable"
                    [removable]="removable" (remove)="remove(person)">
             {{person.name}}
-            <md-icon mdChipRemove>cancel</md-icon>
+            <md-icon mdChipRemove aria-label="Delete this chip">cancel</md-icon>
           </md-chip>
 
           <input mdInput placeholder="New Contributor..."
@@ -83,6 +83,49 @@
           {{aColor.name}}
         </md-chip>
       </md-chip-list>
+    </md-card-content>
+  </md-card>
+
+  <md-card class="demo-autocomplete">
+    <md-toolbar color="primary">Autocomplete Chips</md-toolbar>
+
+    <md-card-content>
+      <h4>Autocomplete Example</h4>
+
+      <p>
+        You can also utilize the <code>&lt;md-chip-list&gt;</code> alongside the
+        <code>[md-autocomplete]</code> component.
+      </p>
+
+      <p>
+        <strong>currentFood:</strong> {{currentFood}}
+      </p>
+
+      <md-input-container [floatPlaceholder]="people.length > 0 ? 'always' : 'auto'">
+        <md-chip-list [enableKeyboard]="trigger.panelOpen ? false : true">
+          <md-chip *ngFor="let favoriteFood of favoriteFoods"
+                   (remove)="removeFavoriteFood(favoriteFood)">
+            {{favoriteFood}}
+            <md-icon mdChipRemove aria-label="Delete {{favoriteFood}}">cancel</md-icon>
+          </md-chip>
+
+          <input mdInput mdChipInput (chipAdded)="addFavoriteFood(currentFood)"
+                 [mdAutocomplete]="foodsAuto" #trigger="mdAutocompleteTrigger" [(ngModel)]="currentFood" />
+        </md-chip-list>
+      </md-input-container>
+
+      <md-autocomplete #foodsAuto="mdAutocomplete">
+        <md-option *ngFor="let food of filterFoodChoices(currentFood)" [value]="food">
+          <span>{{ food }}</span>
+        </md-option>
+      </md-autocomplete>
+
+      <p>
+        <em>
+          <strong>Note:</strong> If you want to allow only choices from the autocomplete, simply
+          remove the <code>mdChipInput</code> directive and the <code>(chipAdded)</code> event.
+        </em>
+      </p>
     </md-card-content>
   </md-card>
 </div>

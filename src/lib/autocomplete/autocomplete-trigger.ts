@@ -62,6 +62,7 @@ export const MD_AUTOCOMPLETE_VALUE_ACCESSOR: any = {
     '(input)': '_handleInput($event)',
     '(keydown)': '_handleKeydown($event)',
   },
+  exportAs: 'mdAutocompleteTrigger',
   providers: [MD_AUTOCOMPLETE_VALUE_ACCESSOR]
 })
 export class MdAutocompleteTrigger implements ControlValueAccessor, OnDestroy {

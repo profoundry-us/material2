@@ -22,6 +22,8 @@ export class ChipsDemo {
   selectable: boolean = true;
   removable: boolean = true;
   addOnBlur: boolean = true;
+  currentFood: string = null;
+  favoriteFoods: string[] = [];
 
   // Enter, comma, semi-colon
   separatorKeys = [ENTER, COMMA, 186];
@@ -40,6 +42,17 @@ export class ChipsDemo {
     { name: 'Primary', color: 'primary' },
     { name: 'Accent', color: 'accent' },
     { name: 'Warn', color: 'warn' }
+  ];
+
+  foodChoices: string[] = [
+    'Pizza',
+    'Pasta',
+    'Enchiladas',
+    'Tacos',
+    'Steak',
+    'Meatloaf',
+    'Hamburgers',
+    'Hot Dogs'
   ];
 
   alert(message: string): void {
@@ -71,5 +84,25 @@ export class ChipsDemo {
 
   toggleVisible(): void {
     this.visible = false;
+  }
+
+  addFavoriteFood(food: string) {
+    // Add our favorite food
+    if (food && food.trim() != '') {
+      this.favoriteFoods.push(food.trim());
+    }
+
+    // Reset the input value
+    console.log(' *** resetting currentFood: ', this.currentFood);
+    this.currentFood = '';
+    console.log(' *** reset: ', this.currentFood);
+  }
+
+  removeFavoriteFood(food: string) {
+    this.favoriteFoods.splice(this.favoriteFoods.indexOf(food), 1);
+  }
+
+  filterFoodChoices(val: string) {
+    return val ? this.foodChoices.filter((s) => s.match(new RegExp(val, 'gi'))) : this.foodChoices;
   }
 }

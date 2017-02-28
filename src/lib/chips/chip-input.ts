@@ -1,4 +1,8 @@
-import {Directive, Output, EventEmitter, Renderer, ElementRef, Input} from '@angular/core';
+import {
+  Directive, Output, EventEmitter, Renderer, ElementRef, Input,
+  Optional
+} from '@angular/core';
+import {MdChipList} from './index';
 import {ENTER} from '../core/keyboard/keycodes';
 
 export interface MdChipInputEvent {
@@ -35,7 +39,8 @@ export class MdChipInput {
   /** The native input element to which this directive is attached. */
   protected _inputElement: HTMLInputElement;
 
-  constructor(protected _renderer: Renderer, protected _elementRef: ElementRef) {
+  constructor(protected _renderer: Renderer, protected _elementRef: ElementRef,
+    @Optional() protected _chipList?:MdChipList) {
     this._inputElement = this._elementRef.nativeElement as HTMLInputElement;
   }
 
@@ -45,7 +50,9 @@ export class MdChipInput {
    * @private
    */
   _keydown(event?: KeyboardEvent) {
-    this._add(event);
+    if (this._chipList && this._chipList.enableKeyboard) {
+      this._add(event);
+    }
   }
 
   /**
